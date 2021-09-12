@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 
 export default function Church() {
 const [data, setData] = useState([]);
-const endPoint = "/churchs"
+const endPoint = "http://localhost:4001/churchs"
 const [name, setName] = useState('')
 const [address, setAddress] = useState(0)
 const [id, setId] = useState('')

@@ -109,7 +109,7 @@ const handleFileUpload = () => {
     const formData = new FormData()
     formData.append('myFile', input.files[0])
   
-    fetch('http://localhost:4001/uploadfile', {
+    fetch('/uploadfile', {
       method: 'POST',
       body: formData
     })

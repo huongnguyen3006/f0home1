@@ -20,8 +20,9 @@ const products = require("./router/productRouter.js")
 app.use('/', products)
 const f0s = require("./router/f0Router.js")
 app.use('/', f0s)
-const userLogin = require("./router/userLoginRouter.js")
-app.use('/', userLogin)
+
+const loginRouter = require("./router/userLoginRouter.js")
+app.use('/', loginRouter)
 
 const doctors = require("./router/doctorRouter.js")
 app.use('/', doctors)

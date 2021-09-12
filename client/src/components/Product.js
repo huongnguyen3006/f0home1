@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 
 export default function ProductList() {
 const [data, setData] = useState([]);
-const endPoint = "/products"
+const endPoint = "http://localhost:4001/products"
 const [name, setName] = useState('')
 const [price, setPrice] = useState(0)
 const [id, setId] = useState('')

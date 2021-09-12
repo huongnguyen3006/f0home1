@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 
 export default function Exam() {
 const [data, setData] = useState([]);
-const endPoint = "/exams"
+const endPoint = "http://localhost:4001/exams"
 const endPointF0 = "/f0s"
 
 const [temperature, setTemperature] = useState(0)
