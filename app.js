@@ -57,7 +57,7 @@ app.get("/welcome", auth, (req, res) => {
 
 
 // All other GET requests not handled before will return our React app
-app.get('*', (req, res) => {
+app.get('/index.html', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../HomeCareApp-main/client/build', 'index.html'));
 });
 

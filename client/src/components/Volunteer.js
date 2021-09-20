@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 
 export default function Volunteer() {
 const [data, setData] = useState([]);
-const endPoint = "/volunteers"
+const endPoint = "http://localhost:4001/volunteers"
 const [name, setName] = useState('')
 const [age, setAge] = useState(0)
 const [phone, setPhone] = useState("")
@@ -48,10 +48,13 @@ const deleteVolunteer = (id) => {
    }).then(data => search())
 }
  
-const editVolunteer = (id, name, age,  iphone, address , avatar) => {
+const editVolunteer = (id, name, age, phone, email, address , avatar) => {
    setId(id)
    setName(name)
    setAge(age)
+   setPhone(phone)
+    setEmail(email)
+   setAddress(address)
    setAvatar(avatar)
    setUploadMessage('')
    document.querySelector("input[type='file']").value = ''
@@ -64,10 +67,13 @@ const load = () => {
 }
 
 function addnew(){
-    setId('')
-    setName('')
-    setAge(0)
-    setUploadMessage('')
+  setId('')
+  setName('')
+  setPhone('')
+  setAddress('')
+  setAge(0)
+  setAvatar('')
+  setUploadMessage('')
 }
 
 function search(){
@@ -220,7 +226,7 @@ return (
             <td>{a.address}</td>
             <td><img style={{width:"60px", height:"60px", "border-radius":"30px"}} src={'http://localhost:4001/'+a.avatar}/></td>
             <td><button className="btn btn-warning" onClick={()=> deleteVolunteer(a._id)}>Delete</button>
-            <button className="btn btn-warning" onClick={()=> editVolunteer(a._id, a.name, a.age, a.avatar)}>Edit</button></td>
+            <button className="btn btn-warning" onClick={()=> editVolunteer(a._id, a.name, a.age, a.phone,  a.email,a.address, a.avatar)}>Edit</button></td>
         </tr>
       ))}
       </tbody>

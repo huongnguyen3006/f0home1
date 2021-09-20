@@ -17,28 +17,30 @@ import Church from "./components/Church";
 import Lecture from "./components/Lecture";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
+import Getpwd from "./components/Getpwd";
+import Resetpwdform from "./components/Resetpwdform";
 function App() {
+
+  const [showLogin, setShowLogin] = useState(false)
 
   useEffect(() => {
     document.title = "Home-base Care Program"
+    if (sessionStorage.getItem('token') === null || sessionStorage.getItem('token') === ""){
+       setShowLogin(true)
+    }
   }, []);
 
   return (
     <div class="container">
-
       <Menu />
-      {sessionStorage.getItem('token') === null || sessionStorage.getItem('token') === "" ? <Login /> :
-        <Router>
-
-          <div>
-            {/*
-          A <Switch> looks through all its children <Route>
-          elements and renders the first one whose path
-          matches the current URL. Use a <Switch> any time
-          you have multiple routes, but you want only one
-          of them to render at a time
-        */}
+      {showLogin? 
+      <Login /> : 
+    
+        <Router >
+          <div>   
+         
             <Switch>
+           
               <Route exact path="/">
               </Route>
               <Route path="/about">
@@ -67,20 +69,37 @@ function App() {
               <Route path="/lecture">
                 <Lecture />
               </Route >
+
             </Switch>
           </div>
         </Router>
       }
-      <div>
+      
+         <Router>
+         <Route path="/resetpwdform">
+            <Resetpwdform />
+          </Route>
+         
+         {/* <Route path="/resetpwd">
+            <Getpwd />
+          </Route> */}
+</Router>
+      {/* <div>
         <Router>
+          <Switch>
         <Route path="/login">
                 <Login />
               </Route >
           <Route path="/signup">
             <Signup />
+          </Route>  
+          <Route path="/getpwd">
+            <Getpwd />
           </Route>
+          </Switch>
         </Router>
-      </div>
+        
+      </div> */}
     </div>
 
 

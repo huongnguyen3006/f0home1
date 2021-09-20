@@ -20,13 +20,21 @@ export default function Menu() {
                         <li><a href="/lecture">Bài giảng</a></li>
                         <li><a href="/about">About</a></li>
                          <form class="form-inline my-2 my-lg-0"></form>
-                        <li class = "right-conner"> 
+                        <li class = "right-conner"> <a>
                         {sessionStorage.getItem('token')!== null && sessionStorage.getItem('token')!==""? 
-                        <Signout/>: ""} 
+                        <Signout/>: ""} </a>
+                       
                         </li>
                     </ul>
                 </div>
+                
             </nav>
+            <a font-size= "14px" class="right-conner" href='/' > back </a>
+            <div>
+                {/* <ul>
+            <li><a href="/signup"></a></li> 
+            </ul> */}
+            </div>
         </div>
     )
 

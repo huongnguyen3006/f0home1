@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import validator from 'validator';
 import App from '../App';
 export default function Signup(){
@@ -8,6 +8,9 @@ export default function Signup(){
     const [password, setPassword] = useState ('')
     const endPoint = "http://localhost:4001/register";
 
+    useEffect(()=>{
+
+    },[])
     
     function register(){
         fetch (endPoint, {
@@ -27,23 +30,20 @@ export default function Signup(){
     return (
         <div class="container-fluid">
         <div class="form-group">
-            <lable>
-                First name: <input type="text" className="form-control" value={first_name} onChange ={(e)=> setFirst_name(e.target.value)}/>  
-            </lable>
-            
            
-            <lable>
-                Last name: <input type="text" className="form-control" value={last_name} onChange={(e)=> setLast_name(e.target.value)}/>
-
-            </lable>
+            <label>First name:
+            <input type="text" className="form-control" value={first_name} onChange={(e) => setFirst_name(e.target.value)} />
+            </label> <br/>
+            <label>Last name:
+            <input type="text" className="form-control" value={last_name} onChange={(e) => setLast_name(e.target.value)} />
+            </label> <br/>
           
-            <lable>
-                Email: <input type="text" className="form-control" value={email} onChange ={(e)=> setEmail(e.target.value)}/>
-            </lable>
+            <label>Email:
+            <input type="text" className="form-control" value={email} onChange={(e) => setEmail(e.target.value)} />
+            </label> <br/>
            
-        
             <label>Password:<input type="password" className="form-control" value={password} onChange={(e) => setPassword(e.target.value)} />
-                </label> <br/>
+            </label> <br/>
          
             <button onClick = {()=> register()}> Sign up </button>
         </div>

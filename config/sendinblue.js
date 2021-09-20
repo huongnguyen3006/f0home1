@@ -17,7 +17,7 @@ exports.sendMail  = (email, hash)=>{
     </body></html>`
     sendSmtpEmail.sender = {"name":"Quản lý Covid","email":"no-reply@covid.manage"};
     sendSmtpEmail.to = [{"email":email,"name": email}];
-    //sendSmtpEmail.cc = [{"email":"nguyengocthaoanh1501@gmail.com","name":"Janice Doe"}];
+    sendSmtpEmail.cc = [{"email":email,"name": email}];
     // sendSmtpEmail.bcc = [{"email":"John Doe","name":"example@example.com"}];
     // sendSmtpEmail.replyTo = {"email":"replyto@domain.com","name":"John Doe"};
     // sendSmtpEmail.headers = {"Some-Custom-Name":"unique-id-1234"};
@@ -33,14 +33,14 @@ exports.sendMail  = (email, hash)=>{
 
 exports.sendMailResetPassword  = (email, hash)=>{
 
-    sendSmtpEmail.subject = "Khôi phục mật khẩu";
+    sendSmtpEmail.subject = "Khôi phục mật khẩu 2";
     sendSmtpEmail.htmlContent = `<html>
     <body><h1>Vui lòng nhấn vào đây để khôi phục mật khẩu</h1>
     <a href='http://localhost:4001/resetpwd?email=${email}&hash=${hash}'>Xác nhận</a>
     </body></html>`
     sendSmtpEmail.sender = {"name":"Quản lý Covid","email":"no-reply@covid.manage"};
     sendSmtpEmail.to = [{"email":email,"name": email}];
-    //sendSmtpEmail.cc = [{"email":"nguyengocthaoanh1501@gmail.com","name":"Janice Doe"}];
+    sendSmtpEmail.cc = [{"email":email,"name": email}];
     // sendSmtpEmail.bcc = [{"email":"John Doe","name":"example@example.com"}];
     // sendSmtpEmail.replyTo = {"email":"replyto@domain.com","name":"John Doe"};
     // sendSmtpEmail.headers = {"Some-Custom-Name":"unique-id-1234"};

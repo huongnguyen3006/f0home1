@@ -1,51 +1,107 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-// import Signup from './Signup';
-export default function Signin() {
+
+import { load } from "dotenv";
+import React, { useEffect, useState } from "react";
+import { Link, useParams} from 'react-router-dom';
+import Signup from "./Signup";
+import Getpwd from "./Getpwd";
+import Resetpwdform from "./Resetpwdform";
+// import Signin from "./components/Signin"
+
+export default function Signin()  {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [data, setData] = useState('')
     const endPoint = "http://localhost:4001/login"
 
-    function login(){
-        if (!(email && password)===null ||(email && password)===""){
-           
-                
-                alert("You have not an account. Please sign up")
-          }
-    else {
-        fetch(endPoint, {
-            method: 'POST',
-            headers: {
-            'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({email:email, password: password })
-        }).then(data => data.json())
-        .then(json=> {
-            //sessionStorage
-            sessionStorage.setItem("token", json.token) 
-            //show main body
-            window.location.reload();
-        })   
-    }}
+    const [showLogin, setShowLogin] = useState(true)
+    const [showForgot, setShowForgot] = useState(false)
+    const [showSignup, setShowSignup] = useState(false)
+    const [showResetpwdform, setShowResetpwdform] = useState(false)
+    const [hash, setHash] = useState('')
+
+    // const { page } = useParams();
+
+    const login =()=>{
+    fetch(endPoint, {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({email:email, password: password })
+    }).then(data => data.json())
+    .then(json=> {
+        //sessionStorage
+        sessionStorage.setItem("token", json.token) 
+        //show main body
+        window.location.reload();
+    })
+    }
 
    
-    return (
-        <div class="container-fluid">
-            <p type="bold"> Please sign in</p>
-            <div class="form-group">
-                <label>Email:<input type="text" className="form-control" value={email} onChange={(e) => setEmail(e.target.value)} />
-                </label>
-                <div class="form-group">
-                <label>Password:<input type="password" className="form-control" value={password} onChange={(e) => setPassword(e.target.value)} />
-                </label>
-            </div>
-            <button  onClick = {()=> login ()}> Log in</button>
-            {/* <button  onClick = {()=> <Link href to ="/signup"> </Link>}>  Sign up  </button> */}
-         <a href="./Signup"> Sign up </a>
-       
-         
-            </div>
 
+    useEffect(()=>{
+        //const query = new URLSearchParams(this.props.location.search)
+        const params = new URLSearchParams(window.location.search) // id=123
+        let page = params.get('page') // 123 
+        if (page==='resetpwdform'){
+            setShowResetpwdform(true)
+            setShowLogin(false)
+            setHash(params.get('hash'))
+        }
+           
+    }, [])
+  
+return (
+    <div class="container-fluid">
+        {showLogin?
+        <div>
+        <h3 > Please sign in</h3>
+        <div class="form-group">
+            <label>Email:
+            <input type="text" className="form-control" value={email} onChange={(e) => setEmail(e.target.value)} />
+            </label>
             </div>
-    )
+            <div class="form-group">
+            <label>Password:<input type="password" className="form-control" value={password} onChange={(e) => setPassword(e.target.value)} />
+            </label>
+        </div>
+        <button class="btn btn-primary"   onClick = {()=> login ()}> Sign in</button> <br/> <br/>
+       
+        <a href='#' onClick = {()=> {
+            setShowSignup(true)
+            setShowLogin(false)
+            setShowForgot(false)
+            setShowResetpwdform(false)
+            }}>  Sign up  </a><br/> 
+
+        <a href='#'  onClick = {()=> {
+            setShowForgot(true)
+            setShowLogin(false)
+            setShowSignup(false)
+            setShowResetpwdform(false)
+            }}> Forgot password </a><br/> 
+
+
+
+        {/* <a href='#' onClick = {()=> {
+            setShowResetpwdform(true)
+            setShowSignup(false)
+            setShowLogin(false)
+            setShowForgot(false)
+            }}>  Reset password form</a> */}
+
+        </div>
+      
+        : ""
+        }   
+        
+         <div> {showSignup? <Signup/> : ""} </div> 
+
+         <div>{showForgot? <Getpwd/> : ""} <br/> </div>
+         <div>{showResetpwdform? <Resetpwdform hash={hash}/> : ""} </div> 
+
+         
+
+        </div>
+)
 }

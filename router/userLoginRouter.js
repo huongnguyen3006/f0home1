@@ -6,9 +6,15 @@ const sendinblue = require('../config/sendinblue')
 
 
 
-// router.get('/users', function(req, res){
-
-//     res.send("List of users")
+// router.get('/testmail', async function(req, res){
+//   try {
+//     await sendinblue.sendMailResetPassword("thanh.hispvietnam@gmail.com", "tatsfasg")
+  
+//     res.send("test mail")
+//   }
+//   catch (err) {
+//     console.log(err);
+//   }
     
 //  }) 
 
@@ -123,9 +129,8 @@ router.post("/login", async (req, res) => {
       if (user && user.hash == hash) {  
         // user
         await User.findOneAndUpdate({email: email}, {status: 'resetpwd'})
-        let tempPwd = (Math.random() + 1).toString(36).substr(0,7)
 
-        res.status(200).send("Reset password successful. Your temporary password is "+tempPwd);
+        res.status(200).send(`Reset ok. Please click <a href="http://localhost:3000/?page=resetpwdform&hash=${hash}">here</a> to update new password`)
       }
       else{
         res.status(400).send("Reset failed");
@@ -139,12 +144,12 @@ router.post("/login", async (req, res) => {
   });
   
 
-  router.get("/getResetPasswordLink", async (req, res) => {
+  router.post("/getResetPasswordLink", async (req, res) => {
 
     // Our login logic starts here
     try {
       // Get user input
-      const  email  = req.query.email;
+      const  email  = req.body.email;
   
       // Validate user input
       if (!(email)) {
@@ -163,6 +168,7 @@ router.post("/login", async (req, res) => {
 
         res.status(200).send("Sent reset password successfully. Check your email");
       }
+      
       else{
         res.status(400).send("Couldn't find the user");
       }
@@ -203,7 +209,54 @@ router.post("/login", async (req, res) => {
     // Our register logic ends here
   });
   
+  router.post("/resetpwdaction", async (req, res) => {
+
+    // Our register logic starts here
+    try {
+      // Get user input
+      const { email, hash, newPassword } = req.body;
   
+      // Validate user input
+      if (!(email && hash && newPassword)) {
+        res.status(400).send("All input is required");
+      }
+  
+      user = await User.findOne({ email });
+  
+      if (!(hash === user.hash)){
+        res.status(400).send("Wrong reset info");
+      }
+
+       //Encrypt user password
+       newEncryptedPassword = await bcrypt.hash(newPassword, 10);
+  
+      // Create user in our database
+      user = await User.findOneAndUpdate({email: email}, {
+        password: newEncryptedPassword
+      });
+  
+      // Create token
+      const token = jwt.sign(
+        { user_id: user._id, email },
+        process.env.TOKEN_KEY,
+        {
+          expiresIn: "2h",
+        }
+      );
+      // save user token
+      user.token = token;
+  
+      // return new user
+      res.status(201).json(user);
+    } catch (err) {
+      console.log(err);
+    }
+    // Our register logic ends here
+  });
+
+  router.get("/users", async (req, res) => {
+    res.status(201).json(await User.find({}));
+  });
   
   router.post("/changepassword", async (req, res) => {
 
