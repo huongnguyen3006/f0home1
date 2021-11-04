@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const exam = require("../model/exam.js")
+const f0 = require("../model/f0.js")
  
 //create a model Product ==> Products (database collection)
 //Teacher => teachers , Course => courses
@@ -12,18 +13,27 @@ router.get('/exams', function(req, res){
 })
 
 // get all exams by F0
-router.get('/exams/f0/:f0', function(req, res){
+
+router.get('/exams/f0s/:f0', function(req, res){
+    // console.log(req.params.f0)
     exam.find({f0: req.params.f0}, function(err, exam){
        res.send(exam)
    })
 })
+
+
  
- 
-router.post('/exams', function(req, res){
+router.post('/exams', async function(req, res){
+     req.body.created_by = req.user._id
+    let f0user = await f0.findOne({_id: req.body.f0_id})
+   
+    req.body.f0_id= f0user
+  
     exam.create(req.body, function(err, exam){
        res.send(exam)
    })
 })
+
  
 router.delete('/exams/:id', function(req, res){
     exam.deleteOne({_id: req.params.id}, function(err, result){
@@ -33,8 +43,12 @@ router.delete('/exams/:id', function(req, res){
  
 router.put('/exams', function(req, res){
     exam.findOneAndUpdate({_id: req.body.id},
-    {name: req.body.name, age: parseInt(req.body.age)}, 
-
+    {temperature: req.body.temperature, 
+    dot: req.body.dot,
+    spo2: req.body.spo2, 
+    symptoms: req.body.symptoms, 
+    prescription: req.body.prescription,
+    note: req.body.note}, 
     function(err, result){
        res.send(result)
    })

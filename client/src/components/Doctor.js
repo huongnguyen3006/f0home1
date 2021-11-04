@@ -21,7 +21,7 @@ const save = () => {
        fetch(endPoint, {
            method: 'POST',
            headers: {
-           'Content-Type': 'application/json'
+           'Content-Type': 'application/json', 'x-access-token': sessionStorage.getItem('token')
            },
            body: JSON.stringify({ name: name, age: age, phone: phone, address: address, avatar: avatar})
        }).then(data => search())
@@ -30,7 +30,7 @@ const save = () => {
        fetch(endPoint, {
            method: 'PUT',
            headers: {
-           'Content-Type': 'application/json'
+           'Content-Type': 'application/json', 'x-access-token': sessionStorage.getItem('token') 
            },
            body: JSON.stringify({ id: id, name: name, age: age, phone: phone, address: address, avatar: avatar})
        }).then(data => search())
@@ -47,25 +47,34 @@ const deleteDoctor = (id) => {
    }).then(data => search())
 }
  
-const editDoctor = (id, name, age,  iphone, address , avatar) => {
+const editDoctor = (id, name, age,  phone, address , avatar) => {
    setId(id)
    setName(name)
    setAge(age)
+   setPhone(phone)
+   setAddress(address)
    setAvatar(avatar)
    setUploadMessage('')
    document.querySelector("input[type='file']").value = ''
 }
 //get data from api
 const load = () => {
-  fetch(endPoint)
-    .then(response => response.json())
-    .then(data => setData(data));
+  fetch(endPoint,{
+  headers: {
+    'Content-Type': 'application/json',
+    'x-access-token': sessionStorage.getItem('token')
 }
+ }) .then(response => response.json())
+  .then(data => setData(data));
+}
+
 
 function addnew(){
     setId('')
     setName('')
     setAge(0)
+    setPhone('')
+    setAddress('')
     setUploadMessage('')
 }
 
@@ -75,8 +84,12 @@ function search(){
   const pageNo = document.querySelector("#pageNo").value
 
 
-  fetch(endPoint + "/search?keyword="+keyword+"&pageSize="+pageSize+"&pageNo="+pageNo)
-  .then(response => response.json())
+  fetch(endPoint + "/search?keyword="+keyword+"&pageSize="+pageSize+"&pageNo="+pageNo,{
+    method:'GET',
+    headers: {'Content-Type':'application/json', 'x-access-token': sessionStorage.getItem('token') ,
+    body: JSON.stringify({ id: id, name: name, age: age, phone: phone, address: address, avatar: avatar})
+  }
+}).then(response => response.json())
   .then(data => {
     populatePageNo(data.Size)
     setData(data.Items)
@@ -110,7 +123,8 @@ const handleFileUpload = () => {
   
     fetch('http://localhost:4001/uploadfile', {
       method: 'POST',
-      body: formData
+      body: formData,
+      headers: {'x-access-token': sessionStorage.getItem('token') }
     })
     .then(response => response.json())
     .then(data => {
@@ -175,7 +189,7 @@ return (
         <div class="row">
           <div class="col-md-8">
             <input type="text" value={keyword} onChange={(e)=>setKeyword(e.target.value)}/>
-            <button onClick={()=>search()}>Search</button>
+            <button onClick={()=>search()}>Tìm kiếm</button>
           </div>
           <div class="col-md-4">
             Số trang: 
@@ -200,7 +214,7 @@ return (
         <th>Số điện thoại</th>
         <th>Địa chỉ</th> 
         <th>Avatar</th>  
-        <th>Action</th>
+        <th>Thay đổi</th>
     
       </tr>
     </thead>
@@ -212,8 +226,8 @@ return (
             <td>{a.phone}</td>
             <td>{a.address}</td>
             <td><img style={{width:"60px", height:"60px", "border-radius":"30px"}} src={'http://localhost:4001/'+a.avatar}/></td>
-            <td><button className="btn btn-warning" onClick={()=> deleteDoctor(a._id)}>Delete</button>
-            <button className="btn btn-warning" onClick={()=> editDoctor(a._id, a.name, a.age, a.avatar)}>Edit</button></td>
+            <td><button className="btn btn-warning" onClick={()=> deleteDoctor(a._id)}>Xóa</button>
+            <button className="btn btn-warning" onClick={()=> editDoctor(a._id, a.name, a.age, a.avatar)}>Sửa</button></td>
         </tr>
       ))}
       </tbody>

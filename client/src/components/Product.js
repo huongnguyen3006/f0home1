@@ -65,7 +65,13 @@ function search(){
   const pageNo = document.querySelector("#pageNo").value
 
 
-  fetch(endPoint + "/search?keyword="+keyword+"&pageSize="+pageSize+"&pageNo="+pageNo)
+  fetch(endPoint + "/search?keyword="+keyword+"&pageSize="+pageSize+"&pageNo="+pageNo, 
+  {
+    headers: {
+      'x-access-token': sessionStorage.getItem('token')
+    }
+  }
+  )
   .then(response => response.json())
   .then(data => {
     populatePageNo(data.Size)

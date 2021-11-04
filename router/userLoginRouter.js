@@ -20,6 +20,9 @@ const sendinblue = require('../config/sendinblue')
 
  // importing user context
 const User = require("../model/user");
+const F0 = require("../model/f0");
+const Doctor = require('../model/doctor')
+// const { default: Doctor } = require('../client/src/components/Doctor')
 
 
 router.post("/login", async (req, res) => {
@@ -65,7 +68,7 @@ router.post("/login", async (req, res) => {
     // Our register logic starts here
     try {
       // Get user input
-      const { first_name, last_name, email, password } = req.body;
+      const { first_name, last_name, email, password, roles } = req.body;
   
       // Validate user input
       if (!(email && password && first_name && last_name)) {
@@ -89,7 +92,34 @@ router.post("/login", async (req, res) => {
         last_name,
         email: email.toLowerCase(), // sanitize: convert email to lowercase
         password: encryptedPassword,
+        roles: roles 
       });
+      if (roles === "f0"){
+      //tao f0 cho user nay
+      const f0 = await F0.create({
+        user_id: user._id,
+        name: "",
+        age: "",
+        add:"",
+        tel: "",
+        zalo:"",
+        dop:"",
+        symptoms_st:"",
+        treated_by: "",
+      });
+    }
+    else {
+      const doctor = await Doctor.create({
+        user_id: user._id,
+        name:"",
+        age: "",
+        phone:"",
+        address:"",
+        avatar:""
+
+      });
+    }
+
   
       // Create token
       const token = jwt.sign(

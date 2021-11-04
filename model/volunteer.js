@@ -6,7 +6,8 @@ const volunteerSchema = new mongoose.Schema({
   email: { type: String, default: null },
   phone : { type: String, default: null },
   address: { type: String, default: null },
-  avatar: { type: String, default: null }
+  avatar: { type: String, default: null },
+ 
 
 });
 

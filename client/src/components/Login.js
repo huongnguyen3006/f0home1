@@ -55,31 +55,31 @@ return (
     <div class="container-fluid">
         {showLogin?
         <div>
-        <h3 > Please sign in</h3>
+        <h3 > Vui lòng đăng nhập</h3>
         <div class="form-group">
             <label>Email:
             <input type="text" className="form-control" value={email} onChange={(e) => setEmail(e.target.value)} />
             </label>
             </div>
             <div class="form-group">
-            <label>Password:<input type="password" className="form-control" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <label>Mật khẩu:<input type="password" className="form-control" value={password} onChange={(e) => setPassword(e.target.value)} />
             </label>
         </div>
-        <button class="btn btn-primary"   onClick = {()=> login ()}> Sign in</button> <br/> <br/>
+        <button class="btn btn-primary"   onClick = {()=> login ()}> Đăng nhập</button> <br/> <br/>
        
         <a href='#' onClick = {()=> {
             setShowSignup(true)
             setShowLogin(false)
             setShowForgot(false)
             setShowResetpwdform(false)
-            }}>  Sign up  </a><br/> 
+            }}>  Đăng kí  </a><br/> 
 
         <a href='#'  onClick = {()=> {
             setShowForgot(true)
             setShowLogin(false)
             setShowSignup(false)
             setShowResetpwdform(false)
-            }}> Forgot password </a><br/> 
+            }}> Quên mật khẩu </a><br/> 
 
 
 

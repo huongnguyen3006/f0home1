@@ -13,38 +13,7 @@ app.use(cors())
 
 
 // Have Node serve the files for our built React app
-app.use(express.static(path.resolve(__dirname, '../HomeCareApp-main/client/build')));
-
-//routers
-const products = require("./router/productRouter.js")
-app.use('/', products)
-const f0s = require("./router/f0Router.js")
-app.use('/', f0s)
-
-const loginRouter = require("./router/userLoginRouter.js")
-app.use('/', loginRouter)
-
-const doctors = require("./router/doctorRouter.js")
-app.use('/', doctors)
-const exams = require("./router/examRouter.js")
-app.use('/', exams)
-const volunteers = require("./router/volunteerRouter.js")
-app.use('/', volunteers)
-
-const users = require("./router/userRouter.js")
-app.use('/', users)
-
-const churchs = require("./router/churchRouter.js")
-app.use('/', churchs)
-
-const lectures = require("./router/lectureRouter.js")
-app.use('/', lectures)
-
-const uploads = require("./router/uploadRouter.js")
-app.use('/', uploads)
-
-//for everyone to view files uploaded
-app.use('/uploads', express.static('uploads'))
+app.use(express.static(path.resolve(__dirname, '../F0homecare/client/build')));
 
 const auth = require("./middleware/auth");
 
@@ -52,6 +21,50 @@ app.get("/welcome", auth, (req, res) => {
   res.status(200).send("Welcome 🙌 ");
 });
 
+
+
+//routers
+const loginRouter = require("./router/userLoginRouter.js")
+app.use('/', loginRouter)
+
+
+// const f0homepage = require("./router/f0homepage.js")
+// app.use('/', auth, f0homepage)
+
+// const doctorhomepage = require("./router/doctorhomepage.js")
+// app.use('/', auth, doctorhomepage)
+
+const products = require("./router/productRouter.js")
+app.use('/', auth, products)
+
+const f0s = require("./router/f0Router.js")
+app.use('/',auth, f0s)
+
+
+const exams = require("./router/examRouter.js")
+app.use('/', exams)
+
+const users = require("./router/userRouter.js")
+app.use('/', users)
+
+
+const doctors = require("./router/doctorRouter.js")
+app.use('/', auth, doctors)
+
+const volunteers = require("./router/volunteerRouter.js")
+app.use('/', volunteers)
+
+const churchs = require("./router/churchRouter.js")
+app.use('/', auth, churchs)
+
+const lectures = require("./router/lectureRouter.js")
+app.use('/', auth,lectures)
+
+const uploads = require("./router/uploadRouter.js")
+app.use('/', auth,uploads)
+
+//for everyone to view files uploaded
+app.use('/uploads', express.static('uploads'))
 
 
 

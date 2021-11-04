@@ -19,6 +19,9 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Getpwd from "./components/Getpwd";
 import Resetpwdform from "./components/Resetpwdform";
+
+
+
 function App() {
 
   const [showLogin, setShowLogin] = useState(false)
@@ -79,10 +82,9 @@ function App() {
          <Route path="/resetpwdform">
             <Resetpwdform />
           </Route>
+       
+        
          
-         {/* <Route path="/resetpwd">
-            <Getpwd />
-          </Route> */}
 </Router>
       {/* <div>
         <Router>

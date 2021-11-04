@@ -40,8 +40,10 @@ router.get('/doctors/search', async function(req, res){
     const keyword = req.query.keyword
     const pageSize = parseInt(req.query.pageSize)
     const pageNo =  parseInt(req.query.pageNo)
+    let roles = req.user.roles
 
     //count number of documents:
+    if (roles==="admin" || roles==="doctor"){
     const number = await doctor.countDocuments({name: {$regex: '.*' + keyword + '.*'}});
     const skipNo =pageSize*(pageNo-1)
 
@@ -53,8 +55,7 @@ router.get('/doctors/search', async function(req, res){
     const result = await doctor.find({name: {$regex: '.*' + keyword + '.*'}})
     .skip(skipNo).limit(pageSize)
     res.send({Size: number, Items: result})
-
+} 
 })
- 
 
 module.exports = router
