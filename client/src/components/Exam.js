@@ -6,9 +6,9 @@ export default function Exam() {
   const datetime = moment()
   const {f0} = useParams()
 
-const endPoint = "http://localhost:4001/exams"
+const endPoint = "/exams"
 const [data, setData] = useState([]);
-const endPointF0 = "http://localhost:4001/f0s/"+f0
+const endPointF0 = "/f0s/"+f0
 
 const [dataF0, setDataF0] = useState([])
 const[name, setName] = useState('')

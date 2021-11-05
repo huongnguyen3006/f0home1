@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 
 export default function Doctor() {
 const [data, setData] = useState([]);
-const endPoint = "http://localhost:4001/doctors"
+const endPoint = "/doctors"
 const [name, setName] = useState('')
 const [age, setAge] = useState(0)
 const [phone, setPhone] = useState("")

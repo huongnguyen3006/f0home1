@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 
 export default function Lecture() {
 const [data, setData] = useState([]);
-const endPoint = "http://localhost:4001/lectures"
+const endPoint = "/lectures"
 const [name, setName] = useState('')
 const [teacher, setTeacher] = useState("")
 const [slides, setSlides] = useState("")

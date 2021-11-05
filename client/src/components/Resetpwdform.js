@@ -6,7 +6,7 @@ export default function Resetpwd(props){
     const [email, setEmail] = useState ('')
     const [newPassword, setNewPassword]=useState('')
     const [confirmpwd, setConfirmpwd]=useState('')
-    const endPoint = "http://localhost:4001/resetpwdaction"
+    const endPoint = "/resetpwdaction"
    
 
     function reset1(){

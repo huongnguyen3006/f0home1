@@ -8,7 +8,7 @@ export default function Resetpd  ()  {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [data, setData] = useState('')
-    const endPoint = "http://localhost:4001/getResetPasswordLink"
+    const endPoint = "/getResetPasswordLink"
 
     function getpwd  ()  {
        

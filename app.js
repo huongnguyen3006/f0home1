@@ -13,7 +13,7 @@ app.use(cors())
 
 
 // Have Node serve the files for our built React app
-app.use(express.static(path.resolve(__dirname, '../F0homecare/client/build')));
+app.use(express.static(path.resolve(__dirname, '../f0home1/client/build')));
 
 const auth = require("./middleware/auth");
 
@@ -71,7 +71,7 @@ app.use('/uploads', express.static('uploads'))
 
 // All other GET requests not handled before will return our React app
 app.get('/index.html', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../HomeCareApp-main/client/build', 'index.html'));
+  res.sendFile(path.resolve(__dirname, '../f0home1/client/build', 'index.html'));
 });
 
 module.exports = app;

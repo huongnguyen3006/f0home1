@@ -11,7 +11,7 @@ export default function Signin()  {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [data, setData] = useState('')
-    const endPoint = "http://localhost:4001/login"
+    const endPoint = "/login"
 
     const [showLogin, setShowLogin] = useState(true)
     const [showForgot, setShowForgot] = useState(false)

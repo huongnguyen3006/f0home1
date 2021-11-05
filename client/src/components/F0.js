@@ -6,7 +6,7 @@ export default function F0() {
   const datetime = moment()
   
 const [data, setData] = useState([]);
-const endPoint = "http://localhost:4001/f0s"
+const endPoint = "/f0s"
 const [name, setName] = useState('')
 const [age, setAge] = useState(0)
 const [id, setId] = useState('')
@@ -21,7 +21,7 @@ const [treatment, setTreatment] = useState('')
 const [note, setNote] = useState('')
 const [treated_by, setTreated_by] =useState('')
 
-const endPoint2 = "http://localhost:4001/doctors"
+const endPoint2 = "/doctors"
 const [dataDoctor, setDataDoctor] =useState([])
 
 const [keyword, setKeyword] = useState('')

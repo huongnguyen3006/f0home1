@@ -11,7 +11,7 @@ export default function Signup(){
  
     const [treated_by, setTreated_by] = useState ('')
 
-    const endPoint = "http://localhost:4001/register";
+    const endPoint = "/register";
     
     function register(){
        
